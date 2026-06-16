@@ -1,11 +1,11 @@
 # 🔒 Secure Multi-Tier Network Architecture
 
-![Architecture Diagram](architecture-diagram.png)
-
 ![Azure](https://img.shields.io/badge/Cloud-Microsoft%20Azure-blue?logo=microsoftazure)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
 ![AZ-104](https://img.shields.io/badge/Exam-AZ--104-0078D4)
 ![AZ-500](https://img.shields.io/badge/Exam-AZ--500-0078D4)
+
+![Architecture Diagram](architecture-diagram.png)
 
 A secure 3-tier Azure network architecture implementing network segmentation, least-privilege access, Azure Bastion, Azure Firewall, and Network Watcher diagnostics.
 
