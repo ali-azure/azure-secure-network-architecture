@@ -2,8 +2,8 @@
 
 ![Azure](https://img.shields.io/badge/Cloud-Microsoft%20Azure-blue?logo=microsoftazure)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
-![AZ-104](https://img.shields.io/badge/Exam-AZ--104-0078D4)
-![AZ-500](https://img.shields.io/badge/Exam-AZ--500-0078D4)
+![AZ-104](https://img.shields.io/badge/Aligned%20With-AZ--104-0078D4)
+![AZ-500](https://img.shields.io/badge/Aligned%20With-AZ--500-0078D4)
 
 ![Architecture Diagram](architecture-diagram.png)
 
