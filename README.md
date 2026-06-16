@@ -1,4 +1,4 @@
-# 🔒 Secure Multi-Tier Network Architecture
+# Secure Multi-Tier Network Architecture
 
 ![Azure](https://img.shields.io/badge/Cloud-Microsoft%20Azure-blue?logo=microsoftazure)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
@@ -13,7 +13,7 @@ Built as part of my Azure AZ-104 and AZ-500 cloud security portfolio.
 
 ---
 
-## 📋 Overview
+## Overview
 
 This project demonstrates the design and deployment of a secure enterprise-style network architecture in Microsoft Azure using security best practices.
 
@@ -31,7 +31,7 @@ The project focused on building a secure Azure network and validating that secur
 
 ---
 
-## 🧩 Architecture Components
+## Architecture Components
 
 | Component            | Name                          | Address / Details |
 | -------------------- | ----------------------------- | ----------------- |
@@ -50,7 +50,7 @@ The project focused on building a secure Azure network and validating that secur
 
 ---
 
-## 🔐 Security Controls
+## Security Controls
 
 ### Network Security Groups (NSGs)
 
@@ -92,32 +92,32 @@ Azure Bastion was deployed to provide secure browser-based administration withou
 
 ---
 
-## 📏 NSG Rules
+## NSG Rules
 
 ### `nsg-web` (Web Tier)
 
-| Direction | Port    | Source     | Destination | Action |
-| --------- | ------- | ---------- | ----------- | ------ |
-| Inbound   | 80, 443 | Internet   | `snet-web`  | Allow  |
-| Outbound  | 8080    | `snet-web` | `snet-app`  | Allow  |
+| Direction | Port    | Source        | Destination   | Action |
+| --------- | ------- | ------------- | ------------- | ------ |
+| Inbound   | 80, 443 | Internet      | `10.0.1.0/24` | Allow  |
+| Outbound  | 8080    | `10.0.1.0/24` | `10.0.2.0/24` | Allow  |
 
 ### `nsg-app` (Application Tier)
 
-| Direction | Port | Source     | Destination | Action |
-| --------- | ---- | ---------- | ----------- | ------ |
-| Inbound   | 8080 | `snet-web` | `snet-app`  | Allow  |
-| Outbound  | 1433 | `snet-app` | `snet-db`   | Allow  |
+| Direction | Port | Source        | Destination   | Action |
+| --------- | ---- | ------------- | ------------- | ------ |
+| Inbound   | 8080 | `10.0.1.0/24` | `10.0.2.0/24` | Allow  |
+| Outbound  | 1433 | `10.0.2.0/24` | `10.0.3.0/24` | Allow  |
 
 ### `nsg-db` (Database Tier)
 
-| Direction | Port | Source     | Destination | Action |
-| --------- | ---- | ---------- | ----------- | ------ |
-| Inbound   | 1433 | `snet-app` | `snet-db`   | Allow  |
-| Inbound   | Any  | Internet   | `snet-db`   | Deny   |
+| Direction | Port | Source        | Destination   | Action |
+| --------- | ---- | ------------- | ------------- | ------ |
+| Inbound   | 1433 | `10.0.2.0/24` | `10.0.3.0/24` | Allow  |
+| Inbound   | Any  | Internet      | `10.0.3.0/24` | Deny   |
 
 ---
 
-## 🖥️ Virtual Machines
+## Virtual Machines
 
 | VM            | Tier     | OS    |
 | ------------- | -------- | ----- |
@@ -130,7 +130,7 @@ The virtual machines were used to validate NSG rules, routing, and secure access
 
 ---
 
-## ✅ Validation & Testing
+## Validation & Testing
 
 Azure Network Watcher was used to validate security controls and troubleshoot network behaviour.
 
@@ -154,7 +154,7 @@ The Next Hop diagnostic confirmed that Internet-bound traffic is routed through 
 
 ---
 
-## ⚠️ Challenges & Honest Notes
+## Challenges & Honest Notes
 
 * Database VM deployment was deferred due to vCPU quota limitations in the subscription.
 * Despite not deploying a database VM, the database tier was fully designed with subnet isolation, NSG rules, and firewall routing.
@@ -162,7 +162,7 @@ The Next Hop diagnostic confirmed that Internet-bound traffic is routed through 
 
 ---
 
-## 🧠 What I Learned
+## What I Learned
 
 * How subnet segmentation reduces the attack surface.
 * How NSGs control east-west traffic between tiers.
@@ -172,7 +172,7 @@ The Next Hop diagnostic confirmed that Internet-bound traffic is routed through 
 
 ---
 
-## 🎯 AZ-104 Objectives Covered
+## AZ-104 Objectives Covered
 
 * Configure and manage virtual networking
 * Configure Network Security Groups
@@ -183,7 +183,7 @@ The Next Hop diagnostic confirmed that Internet-bound traffic is routed through 
 
 ---
 
-## 🛡️ AZ-500 Objectives Covered
+## AZ-500 Objectives Covered
 
 * Secure network access
 * Network segmentation and isolation
@@ -194,7 +194,7 @@ The Next Hop diagnostic confirmed that Internet-bound traffic is routed through 
 
 ---
 
-## 🛠️ Tools Used
+## Tools Used
 
 * Microsoft Azure Portal
 * Azure Virtual Network
