@@ -1,11 +1,11 @@
 # 🔒 Secure Multi-Tier Network Architecture
 
+![Architecture Diagram](architecture-diagram.png)
+
 ![Azure](https://img.shields.io/badge/Cloud-Microsoft%20Azure-blue?logo=microsoftazure)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
 ![AZ-104](https://img.shields.io/badge/Exam-AZ--104-0078D4)
 ![AZ-500](https://img.shields.io/badge/Exam-AZ--500-0078D4)
-
-![Architecture Diagram](architecture-diagram.png)
 
 A secure 3-tier Azure network architecture implementing network segmentation, least-privilege access, Azure Bastion, Azure Firewall, and Network Watcher diagnostics.
 
@@ -27,7 +27,7 @@ The environment implements:
 * Network Watcher diagnostics and monitoring
 * Flow Logs for network visibility
 
-The goal was not only to deploy Azure resources, but also to validate security controls and network behaviour using Azure-native monitoring and troubleshooting tools.
+The project focused on building a secure Azure network and validating that security controls, routing, and connectivity behaved as expected.
 
 ---
 
@@ -35,6 +35,8 @@ The goal was not only to deploy Azure resources, but also to validate security c
 
 | Component            | Name                          | Address / Details |
 | -------------------- | ----------------------------- | ----------------- |
+| Resource Group       | `rg-network-project`          | Project resources |
+| Region               | `Sweden Central`              | Azure Region      |
 | Virtual Network      | `vnet-secure-architecture`    | `10.0.0.0/16`     |
 | Web Tier Subnet      | `snet-web`                    | `10.0.1.0/24`     |
 | App Tier Subnet      | `snet-app`                    | `10.0.2.0/24`     |
@@ -43,8 +45,6 @@ The goal was not only to deploy Azure resources, but also to validate security c
 | Firewall Subnet      | `AzureFirewallSubnet`         | `10.0.5.0/26`     |
 | Azure Firewall       | `fw-secure-architecture`      | `10.0.5.4`        |
 | Azure Bastion        | `bastion-secure-architecture` | Secure SSH access |
-| Region               | `UK South`                    | Azure Region      |
-| Resource Group       | `rg-network-project`          | Project resources |
 
 ![VNet and Subnets](screenshots/phase-02-vnet/03-vnet-subnets.png)
 
@@ -67,11 +67,13 @@ Network Security Groups were used to enforce least-privilege communication betwe
 
 ![Azure Firewall Overview](screenshots/phase-05-firewall/04-firewall-overview.png)
 
-* Centralized outbound traffic inspection.
-* Firewall policy-based filtering.
-* Dedicated firewall subnet deployment.
+* Centralized traffic inspection and routing.
+* Dedicated Azure Firewall subnet deployment.
+* Outbound traffic forced through the firewall using UDRs.
 
 ### Azure Bastion
+
+Azure Bastion was deployed to provide secure browser-based administration without exposing SSH ports to the Internet.
 
 ![Azure Bastion Deployment](screenshots/phase-04-bastion/04-bastion-overview.png)
 
@@ -130,17 +132,15 @@ The virtual machines were used to validate NSG rules, routing, and secure access
 
 ## ✅ Validation & Testing
 
-### IP Flow Verify Results
+Azure Network Watcher was used to validate security controls and troubleshoot network behaviour.
 
-| Test           | Source     | Destination | Port   | Result    |
-| -------------- | ---------- | ----------- | ------ | --------- |
-| Web to App     | `10.0.1.4` | `10.0.2.4`  | `8080` | ✅ Allowed |
-| Web to DB      | `10.0.1.4` | `10.0.3.4`  | `1433` | ❌ Denied  |
-| Internet to DB | Internet   | `10.0.3.4`  | Any    | ❌ Denied  |
+### IP Flow Verify
+
+Validated that NSG rules correctly allowed and denied traffic between network tiers.
 
 ### Next Hop Validation
 
-The Next Hop diagnostic confirmed that Internet-bound traffic is routed through Azure Firewall.
+The Next Hop diagnostic confirmed that Internet-bound traffic is routed through Azure Firewall (`10.0.5.4`).
 
 ![Next Hop Validation](screenshots/phase-06-network-watcher/02-next-hop-firewall.png)
 
@@ -156,9 +156,9 @@ The Next Hop diagnostic confirmed that Internet-bound traffic is routed through 
 
 ## ⚠️ Challenges & Honest Notes
 
-* Azure Firewall and Bastion were deployed and tested to gain hands-on experience with enterprise Azure services.
 * Database VM deployment was deferred due to vCPU quota limitations in the subscription.
-* Security validation was performed using Azure Network Watcher diagnostics.
+* Despite not deploying a database VM, the database tier was fully designed with subnet isolation, NSG rules, and firewall routing.
+* Azure Network Watcher diagnostics were used to validate routing, connectivity, and security controls after deployment.
 
 ---
 
@@ -196,7 +196,7 @@ The Next Hop diagnostic confirmed that Internet-bound traffic is routed through 
 
 ## 🛠️ Tools Used
 
-* Microsoft Azure
+* Microsoft Azure Portal
 * Azure Virtual Network
 * Network Security Groups (NSGs)
 * Azure Bastion
@@ -207,28 +207,3 @@ The Next Hop diagnostic confirmed that Internet-bound traffic is routed through 
 * Storage Account
 * Linux Virtual Machines
 
----
-
-## 📁 Repository Structure
-
-```text
-azure-secure-network-architecture/
-│
-├── architecture-diagram.png
-├── README.md
-└── screenshots/
-    ├── phase-01-design/
-    ├── phase-02-vnet/
-    ├── phase-03-nsg/
-    ├── phase-04-bastion/
-    ├── phase-05-firewall/
-    └── phase-06-network-watcher/
-```
-
----
-
-## 👨‍💻 Author
-
-**Ali Aden**
-
-Azure | Cloud Security | Networking | AZ-104 | AZ-500
